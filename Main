@@ -1,0 +1,39 @@
+import java.util.Locale;
+import java.util.Scanner;
+
+public class Main {
+    public static final Line L1 = new Line(0, 0, -2);
+    public static final VerticalParabola VP1 = new VerticalParabola(0, -5, 0.25);
+    public static final Rectangle R1 = new Rectangle(-6, -2, -1, 4);
+
+    public static SimpleColor getColor(double x, double y) {
+        if (L1.isPointAboveLine(x ,y) && R1.isPointInsideRect(x, y)) {
+            return SimpleColor.ORANGE;
+        }
+        if (L1.isPointAboveLine(x, y) && VP1.isPointAboveVerticalParabola(x, y) && !R1.isPointInsideRect(x, y)) {
+            return SimpleColor.YELLOW;
+        }
+        if (!L1.isPointAboveLine(x, y) && (!VP1.isPointAboveVerticalParabola(x, y) || y > 4)) {
+            return SimpleColor.BLUE;
+        }
+        return SimpleColor.GRAY;
+    }
+
+    public static void printColorForPoint(double x, double y) {
+        System.out.printf("(%.3f, %.3f) -> %s%n", x, y, getColor(x, y));
+    }
+
+    public static void tests() {
+        printColorForPoint(-1.1, 2.5); // ORANGE
+        printColorForPoint(0, 0.5); // YELLOW
+        printColorForPoint(-1, 1.9); // GRAY
+        printColorForPoint(5, 1); // GRAY
+        printColorForPoint(-5, 1); // BLUE
+        printColorForPoint(-5, -5); // BLUE
+    }
+
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.ROOT);
+        Scanner scanner = new Scanner(System.in);
+    }
+}
